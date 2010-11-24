@@ -82,7 +82,7 @@ sub filter {
 	# Vector lineup #
 	#################
 
-	my $vector = $vecs->{'MULV'} || undef;
+	my $vector = $vecs->{'PB5LTR'} || undef;
 
 	return(0) unless $vector;
 	return(0) if $vector->[6] != 0; # must start at begining
