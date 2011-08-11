@@ -82,7 +82,7 @@ sub filter {
 	# Vector lineup #
 	#################
 
-	my $vector = $vecs->{'PB5LTR'} || undef;
+	my $vector = $vecs->{'TRNSP5LTR'} || undef;
 
 	return(0) unless $vector;
 	return(0) if $vector->[6] != 0; # must start at begining
@@ -224,7 +224,7 @@ while (my $seq = $in->next_seq()) {
 
 	$bc{$code}{'seq'}{$seq->primary_id} = $s;
 	$h1->execute($id, $code, $s, $run_name);
-	print STDERR "\r$cnt" if ((++$cnt % 10) == 0);
+	print STDERR "\r$cnt" if ((++$cnt % 1000) == 0);
 }
 print STDERR "\rTotal reads: $cnt\n";
 $dbh->commit;
@@ -283,7 +283,7 @@ while (<PSL>) {
 	push @{$mappings{$row[9]}}, [@row, $mID];
 	next if (not exists($valid{$row[9]}));
 	$bc{$valid{$row[9]}}{'hits'}{$row[9]} = 0;
-	print STDERR "\r$cnt" if ((++$cnt % 10) == 0);
+	print STDERR "\r$cnt" if ((++$cnt % 1000) == 0);
 }
 close PSL;
 $dbh->commit;
@@ -316,7 +316,7 @@ while (<EXO>) {
 	chomp;
 	my @row = split(/\s+/, $_);
 	$h3->execute($read{$row[1]}, @row[1 .. 9], join(" ", @row[10 .. $#row]));
-	print STDERR "\r$cnt" if ((++$cnt % 10) == 0);
+	print STDERR "\r$cnt" if ((++$cnt % 1000) == 0);
 	next if (not exists($valid{$row[1]}));
 	$vec{$row[1]}{$row[5]} = [@row];
 }
@@ -377,6 +377,7 @@ foreach my $code (keys(%bc)) {
 				$name .= ("-") x ($ml - $nl - 1) . "]";
 			}
 			else {
+				print STDERR "$v\n$name\t$ml";
 				substr($name, $ml - 1) = "]";
 			}
 			substr($vecSeq,$v->[2], $ml, $name);
@@ -420,9 +421,9 @@ foreach my $code (keys(%bc)) {
 			my $flag = 0;	
 			push @putative, [$h->[-1], $read{$h->[9]}, @$h[9, 13, 15, 16, 8], $flag];
 			$putativeScore = $h->[0];
-
+			print STDERR "$h\n";
 		}
-
+		
 		if (@putative == 1) {
 			$h4->execute(@{$putative[0]});	
 			push @insert, @putative;

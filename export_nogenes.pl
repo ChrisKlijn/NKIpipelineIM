@@ -94,11 +94,14 @@ my @grpCols = (
 #############################################
 
 my $run_name = shift || "out1";
+my $vectname = shift || "SB";
 my $dbf = shift || "insert.db";
 my $squat = shift || 0;
 my $window = shift || 10000;
 my $cw = shift || 50; # clustering window
 my $spl = shift || "T7";
+
+print STDERR "$spl\n$vectname\n";
 
 $| = 1;
 
@@ -116,8 +119,8 @@ my $q2 = "select * from vulgar left join read using (readID) where run_name = ? 
 $splink{$_->[2]} = [@$_] foreach @{$dbh->selectall_arrayref($q2, {}, $run_name, $spl)};
 
 my %vec = ();
-my $q3 = "select * from vulgar left join read using (readID) where run_name = ? and (tName = ? or tName = ?)";
-$vec{$_->[2]} = [@$_] foreach @{$dbh->selectall_arrayref($q3, {}, $run_name, "SB", "MMTV7")};
+my $q3 = "select * from vulgar left join read using (readID) where run_name = ? and tName = ?";
+$vec{$_->[2]} = [@$_] foreach @{$dbh->selectall_arrayref($q3, {}, $run_name, $vectname)};
 
 print STDERR "Nr.spl: " . scalar(keys(%splink)), "\n";
 print STDERR "Nr.vec: " . scalar(keys(%vec)), "\n";

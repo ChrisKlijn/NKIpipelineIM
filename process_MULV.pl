@@ -188,11 +188,11 @@ while (<BCEXO>) {
 	my $i = 0;
 	my $readID = $row[1];
 	my $bc = $prebc . $row[5];
-
+	print STDERR "$bc";
 	# If one read has mulitiple barcodes, select highest score
 	##########################################################
 	if (exists($r2bc{$readID})) {
-		next if ($row[9] < $r2bc{$readID}->[9]);
+		next if ($row[9] <= $r2bc{$readID}->[9]);
 	}
 	$r2bc{$readID} = [@row];
 }
@@ -224,7 +224,7 @@ while (my $seq = $in->next_seq()) {
 
 	$bc{$code}{'seq'}{$seq->primary_id} = $s;
 	$h1->execute($id, $code, $s, $run_name);
-	print STDERR "\r$cnt" if ((++$cnt % 10) == 0);
+	# print STDERR "\r$cnt" if ((++$cnt % 10) == 0);
 }
 print STDERR "\rTotal reads: $cnt\n";
 $dbh->commit;
