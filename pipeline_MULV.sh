@@ -9,8 +9,8 @@ BASE=$2
 MKDB=$3
 
 blat ~/mouseref/mouse_ref.fa $FNA -out=psl -minScore=10 $BASE.psl 2> $BASE.blatlog
-exonerate -s 75 $FNA ~/shearing/pipeline/vecfiles/vec.fa > $BASE.exo &
-exonerate -s 49 --exhaustive yes $FNA ~/shearing/pipeline/MULVbc.fa > $BASE.bc.exo &
+exonerate -s 75 $FNA ~/shearing/vecfiles/vec.fa > $BASE.exo &
+exonerate -s 49 --exhaustive yes $FNA ~/shearing/vecfiles/MULVbc.fa > $BASE.bc.exo &
 ~/shearing/pipeline/process_MULV.pl $FNA $BASE $BASE $BASE $MKDB > $BASE.tsv 2> $BASE.log
 ~/shearing/pipeline/makeRef.pl $BASE
 blat $BASE.ref.fa $BASE.que.fa -minScore=10 -out=psl $BASE.2.psl
