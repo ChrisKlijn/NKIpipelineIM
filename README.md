@@ -17,7 +17,7 @@ The first argument is the library fna file with the 454 reads, the second argume
 
 These commands will create several output files. The `insert.db` file is the sqLite database with the mapped information, `analysis1.export.txt`  will be the text-based output file that can be further processed using the R code.
 
-The R code contains two files, `functions_preprocessing.R' contains all the code for preprocessing an export file and `example_workflow.R` contains an example how to link the different functions. The result is a text file that can be uploaded to the iMDB.
+The R code contains two files, `functions_preprocessing.R` contains all the code for preprocessing an export file and `example_workflow.R` contains an example how to link the different functions. The result is a text file that can be uploaded to the iMDB.
 
 ## To Do and Issues
 
