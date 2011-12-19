@@ -1,7 +1,7 @@
 #-----------------------------------------------------------------------
 # Example data workflow preprocessing in R
 #
-# Run this in the R/ directory of the svn
+# Run this in the R/ directory of the pipeline dir
 #-----------------------------------------------------------------------
 
 #-----------------------------------------------------------------------
@@ -28,7 +28,7 @@ chromEnds <- c(0, chromEnds)
 #-----------------------------------------------------------------------
 
 # Read data
-dataFile <- 'exampleData/24-06-09-3.export.txt'
+dataFile <- '../exampleData/24-06-09-3.export.txt'
 
 # Import and filter/annotate the readFrame.
 readFrame <- importReadFrame(dataFile)
@@ -43,7 +43,7 @@ readFrame <- readFrameResolveContaminations(readFrame)
 clustInfo <- readFrameFillClustInfo(readFrame)
 
 # Write final result to file
-write.table(clustInfo, file = "exampleData/insInfo.csv", quote = FALSE, sep = ",", row.names = FALSE)
+write.table(clustInfo, file = "../exampleData/insInfo.csv", quote = FALSE, sep = ",", row.names = FALSE)
 
 # Produce tumor information (reads per tumor)
 
@@ -55,4 +55,4 @@ for (i in 1:nrow(tumorInfo)) {
 	tumorInfo$totalReads[i] <- sum(readFrame$depth[readFrame$index_numeric == tumorInfo$tumorIndexNum[i]])
 }
 
-write.table(tumorInfo, file = "exampleData/tumInfo.csv", quote = FALSE, sep = ",", row.names = FALSE)
+write.table(tumorInfo, file = "../exampleData/tumInfo.csv", quote = FALSE, sep = ",", row.names = FALSE)
